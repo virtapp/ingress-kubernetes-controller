@@ -1,0 +1,56 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+      kubernetes.io/tls-acme: 'true'
+    name: multi-route-ssl
+    namespace: monitoring
+spec:
+  rules:
+  - host: api.innovi.io
+    http:
+      paths:
+      - backend:
+          serviceName: innovi-core-api
+          servicePort: 8080
+  - host: console.innovi.io
+    http:
+      paths:
+      - backend:
+          serviceName: innovi-console
+          servicePort: 8081
+  - host: portal.innovi.io
+    http:
+      paths:
+      - backend:
+          serviceName: innovi-portal
+          servicePort: 8082
+  - host: proxy.innovi.io
+    http:
+      paths:
+      - backend:
+          serviceName: innovi-core-agent-proxy 
+          servicePort: 8070
+  - host: dashboard.innovi.io
+    http:
+      paths:
+      - backend:
+          serviceName: linkerd-web
+          servicePort: 8084
+  - host: monitor.innovi.io
+    http:
+      paths:
+      - backend:
+          serviceName: grafana
+          servicePort: 3000
+  tls:
+  - secretName: letsencrypt-prod
+    hosts:
+     - api.innovi.io
+     - console.innovi.io
+     - portal.innovi.io
+     - proxy.innovi.io
+     - dashboard.innovi.io
+     - monitor.innovi.io

@@ -1,0 +1,56 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongIngress
+metadata:
+   name: kong-ingress-config
+   namespace: default
+proxy:
+   protocols:
+      - http
+      - https
+   path: /
+route:
+   methods:
+      - POST
+      - GET
+   strip_path: false
+   preserve_host: true
+ ---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-ingress-application
+  #namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "kong"
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod # letsencrypt-staging
+
+    # We are indicating the KongIngress resource
+    configuration.konghq.com: kong-ingress-config
+
+    certmanager.k8s.io/acme-challenge-type: http01
+    kubernetes.io/tls-acme: "true"
+    certmanager.k8s.io/acme-http01-edit-in-place: "true"
+spec:
+  rules:
+ # DEV ENVIRONMENT
+  - host: dev.mydomain.org
+    http:
+      paths:
+        - path: "/"
+          backend:
+            serviceName: myapp
+            servicePort: 80
+  # SANDBOX ENVIRONMENT
+  - host: sandbox.mydomain.org
+    http:
+      paths:
+        - path: "/"
+          backend:
+            serviceName: myapp
+            servicePort: 80  
+  tls:
+  - hosts:
+    - dev.mydomain.org
+    - sandbox.mydomain.org
+    - production.mydomain.org 
+    secretName: letsencrypt-prod #letsencrypt-staging

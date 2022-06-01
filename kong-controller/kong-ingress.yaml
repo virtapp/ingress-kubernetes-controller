@@ -1,0 +1,26 @@
+apiVersion: "extensions/v1beta1"
+kind: "Ingress"
+metadata:
+  name: "route-ingress"
+  namespace: "default"
+  annotations:
+    kubernetes.io/ingress.class: "kong"
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - secretName: "outsrc-dev-tls"
+      hosts:
+        - "dev.innovi.io"
+  rules:
+  - host: "dev.innovi.io"
+    http:
+      paths:
+        - path: "/"
+          backend:
+            serviceName: "outsrc-front-service"
+            servicePort: 3000
+        - path: "/api"
+          backend:
+            serviceName: "outsrc-back-service"
+            servicePort: 3000

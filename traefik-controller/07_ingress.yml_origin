@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: traefik-dashboard-ingress
+  namespace: kube-system
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/frontend-entry-points: http,https
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+    traefik.ingress.kubernetes.io/redirect-permanent: "true"
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod-01
+    kubernetes.io/tls-acme: 'true'
+    #traefik.ingress.kubernetes.io/auth-type: "basic"
+    #traefik.ingress.kubernetes.io/auth-secret: "traefik-dashboard-auth"
+spec:
+  rules:
+  - host: dashboard.smarthub.me
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: traefik-dashboard
+          servicePort: 8080
+  
+  tls:
+  - secretName: letsencrypt-prod-01
+    hosts:
+     - dashboard.smarthub.me
