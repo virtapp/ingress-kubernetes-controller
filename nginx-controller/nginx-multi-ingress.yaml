@@ -9,19 +9,19 @@ metadata:
     namespace: monitoring
 spec:
   rules:
-  - host: alertmanager-staging.innovi.io
+  - host: alertmanager-staging.cyberbot.io
     http:
       paths:
       - backend:
           serviceName: alertmanager
           servicePort: 9093
-  - host: monitor-staging.innovi.io
+  - host: monitor-staging.cyberbot.io
     http:
       paths:
       - backend:
           serviceName: grafana
           servicePort: 3000
-  - host: prometheus-staging.innovi.io
+  - host: prometheus-staging.cyberbot.io
     http:
       paths:
       - backend:
@@ -30,6 +30,6 @@ spec:
   tls:
   - secretName: letsencrypt-prod
     hosts:
-     - alertmanager-staging.innovi.io
-     - monitor-staging.innovi.io
-     - prometheus-staging.innovi.io
+     - alertmanager-staging.cyberbot.io
+     - monitor-staging.cyberbot.io
+     - prometheus-staging.cyberbot.io
