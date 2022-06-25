@@ -15,31 +15,31 @@ spec:
       - backend:
           serviceName: cyberbot-api
           servicePort: 7080
-  - host: console.innovi.io
+  - host: console.cyberbot.io
     http:
       paths:
       - backend:
           serviceName: cyberbot-console
-          servicePort: 7081
+          servicePort: 7082
   - host: portal.cyberbot.io
     http:
       paths:
       - backend:
           serviceName: cyberbot-portal
-          servicePort: 7082
+          servicePort: 7086
   - host: proxy.innovi.io
     http:
       paths:
       - backend:
           serviceName: cyberbot-proxy 
-          servicePort: 8070
+          servicePort: 7070
   - host: dashboard.cyberbot.io
     http:
       paths:
       - backend:
           serviceName: linkerd-web
           servicePort: 7084
-  - host: monitor.innovi.io
+  - host: monitor.cyberbot.io
     http:
       paths:
       - backend:
