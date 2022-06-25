@@ -9,36 +9,36 @@ metadata:
     namespace: monitoring
 spec:
   rules:
-  - host: api.innovi.io
+  - host: api.cyberbot.io
     http:
       paths:
       - backend:
-          serviceName: innovi-core-api
-          servicePort: 8080
+          serviceName: cyberbot-api
+          servicePort: 7080
   - host: console.innovi.io
     http:
       paths:
       - backend:
-          serviceName: innovi-console
-          servicePort: 8081
-  - host: portal.innovi.io
+          serviceName: cyberbot-console
+          servicePort: 7081
+  - host: portal.cyberbot.io
     http:
       paths:
       - backend:
-          serviceName: innovi-portal
-          servicePort: 8082
+          serviceName: cyberbot-portal
+          servicePort: 7082
   - host: proxy.innovi.io
     http:
       paths:
       - backend:
-          serviceName: innovi-core-agent-proxy 
+          serviceName: cyberbot-proxy 
           servicePort: 8070
-  - host: dashboard.innovi.io
+  - host: dashboard.cyberbot.io
     http:
       paths:
       - backend:
           serviceName: linkerd-web
-          servicePort: 8084
+          servicePort: 7084
   - host: monitor.innovi.io
     http:
       paths:
@@ -48,9 +48,9 @@ spec:
   tls:
   - secretName: letsencrypt-prod
     hosts:
-     - api.innovi.io
-     - console.innovi.io
-     - portal.innovi.io
-     - proxy.innovi.io
-     - dashboard.innovi.io
-     - monitor.innovi.io
+     - api.cyberbot.io
+     - console.cyberbot.io
+     - portal.cyberbot.io
+     - proxy.cyberbot.io
+     - dashboard.cyberbot.io
+     - monitor.cyberbot.io
