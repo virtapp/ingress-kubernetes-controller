@@ -1,3 +1,23 @@
+
+apiVersion: configuration.konghq.com/v1
+kind: KongIngress
+metadata:
+   name: kong-ingress-config
+   namespace: centerity
+proxy:
+   protocols:
+      - http
+      - https
+   path: /
+route:
+   methods:
+      - POST
+      - GET
+   strip_path: false
+   preserve_host: true
+   
+---
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
