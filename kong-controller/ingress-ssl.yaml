@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: konga
+  namespace: centerity
+  annotations:
+    kubernetes.io/ingress.class: "kong"
+spec:
+  tls:
+  - hosts:
+    - konga.centerity.com
+    secretName: centerity
+  rules:
+  - host: konga.centerity.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: konga
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
